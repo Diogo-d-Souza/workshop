@@ -39,5 +39,19 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(findById(id));
     }
 
+    public User update(User user){
+        Optional<User> editedUser = userRepository.findById(user.getId());
+        if(editedUser.isPresent()){
+            newData(editedUser.get(), user);
+            return userRepository.save(editedUser.get());
+        }
+        throw new NotFoundException("User not found");
+    }
+
+    private void newData(User editedUser, User user) {
+        editedUser.setName(user.getName());
+        editedUser.setEmail(user.getEmail());
+        editedUser.setPassword(user.getPassword());
+    }
 
 }
