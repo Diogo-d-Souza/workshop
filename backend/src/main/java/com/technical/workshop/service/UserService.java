@@ -7,7 +7,8 @@ import java.util.List;
 
 @Service
 public interface UserService  {
-
     List<User> listAll();
+    User findById(String id);
+    User create(User user);
 
 }
