@@ -1,7 +1,6 @@
 package com.technical.workshop.controller;
 
 import com.technical.workshop.model.DTO.UserDTO;
-import com.technical.workshop.model.User;
 import com.technical.workshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -24,19 +22,19 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll() {
-        List<User> list = userService.listAll();
+        List<com.technical.workshop.model.User> list = userService.listAll();
         List<UserDTO> listDTO = list.stream().map(UserDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-        User user = userService.findById(id);
+        com.technical.workshop.model.User user = userService.findById(id);
         return ResponseEntity.ok().body(new UserDTO((user)));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> create(@RequestBody User user) {
+    public ResponseEntity<Void> create(@RequestBody com.technical.workshop.model.User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user = userService.create(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
@@ -50,7 +48,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody User user, @PathVariable String id) {
+    public ResponseEntity<Void> update(@RequestBody com.technical.workshop.model.User user, @PathVariable String id) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(id);
         userService.update(user);

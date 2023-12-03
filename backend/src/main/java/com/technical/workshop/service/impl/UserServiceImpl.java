@@ -1,10 +1,9 @@
 package com.technical.workshop.service.impl;
 
-import com.technical.exceptions.NotFoundException;
+import com.technical.workshop.exceptions.NotFoundException;
 import com.technical.workshop.model.User;
 import com.technical.workshop.repositories.UserRepository;
 import com.technical.workshop.service.UserService;
-import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +38,13 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(findById(id));
     }
 
-    public User update(User user){
+    @Override
+    public void update(User user){
         Optional<User> editedUser = userRepository.findById(user.getId());
         if(editedUser.isPresent()){
             newData(editedUser.get(), user);
-            return userRepository.save(editedUser.get());
+            userRepository.save(editedUser.get());
+            return;
         }
         throw new NotFoundException("User not found");
     }

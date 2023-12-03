@@ -11,6 +11,6 @@ public interface UserService  {
     public User findById(String id);
     public User create(User user);
     public void delete(String id);
-    public User update(User user);
+    public void update(User user);
 
 }
