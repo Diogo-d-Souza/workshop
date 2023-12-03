@@ -13,6 +13,7 @@ public class Car {
     private String licensePlate;
     private Integer year;
     private CarOwnerDTO user;
+    private ServiceCar serviceCar;
 
     public String getId() {
         return id;
@@ -52,5 +53,13 @@ public class Car {
 
     public void setUser(CarOwnerDTO user) {
         this.user = user;
+    }
+
+    public ServiceCar getServiceCar() {
+        return serviceCar;
+    }
+
+    public void setServiceCar(ServiceCar serviceCar) {
+        this.serviceCar = serviceCar;
     }
 }

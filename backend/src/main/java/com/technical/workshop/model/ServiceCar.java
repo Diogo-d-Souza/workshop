@@ -8,6 +8,7 @@ public class ServiceCar {
     @Id
     private String id;
     private String serviceName;
+    private Car car;
 
     public String getId() {
         return id;
@@ -23,5 +24,13 @@ public class ServiceCar {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

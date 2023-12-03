@@ -1,6 +1,7 @@
 package com.technical.workshop.model.DTO;
 
 import com.technical.workshop.model.Car;
+import com.technical.workshop.model.ServiceCar;
 import com.technical.workshop.model.User;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ public class CarDTO {
     private String licensePlate;
     private Integer year;
     private CarOwnerDTO user;
+    private ServiceCar serviceCar;
 
     public CarDTO(Car car) {
         id = car.getId();
@@ -18,6 +20,7 @@ public class CarDTO {
         licensePlate = car.getLicensePlate();
         year = car.getYear();
         user = car.getUser();
+        serviceCar = car.getServiceCar();
     }
 
     public String getId() {
@@ -58,5 +61,13 @@ public class CarDTO {
 
     public void setUser(CarOwnerDTO user) {
         this.user = user;
+    }
+
+    public ServiceCar getServiceCar() {
+        return serviceCar;
+    }
+
+    public void setServiceCar(ServiceCar serviceCar) {
+        this.serviceCar = serviceCar;
     }
 }

@@ -88,7 +88,7 @@ public class CarController {
                 }
                 throw new RuntimeException("Car not found");
             }
-            throw new RuntimeException("User doens't have a registered car");
+            throw new RuntimeException("User doesn't have a registered car");
         }
         return ResponseEntity.noContent().build();
     }
