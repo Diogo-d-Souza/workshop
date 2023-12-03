@@ -3,31 +3,31 @@ package com.technical.workshop.service.impl;
 import com.technical.workshop.exceptions.NotFoundException;
 import com.technical.workshop.model.CarMaintenance;
 import com.technical.workshop.model.User;
-import com.technical.workshop.repositories.CarMaintanceRepository;
+import com.technical.workshop.repositories.CarMaintenanceRepository;
 import com.technical.workshop.repositories.ServiceCarRepository;
 import com.technical.workshop.repositories.UserRepository;
-import com.technical.workshop.service.CarMaintanceService;
+import com.technical.workshop.service.CarMaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class CarMaintanceServiceImpl implements CarMaintanceService {
+public class CarMaintenanceServiceImpl implements CarMaintenanceService {
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private ServiceCarRepository serviceCarRepository;
     @Autowired
-    private CarMaintanceRepository carMaintanceRepository;
+    private CarMaintenanceRepository carMaintenanceRepository;
 
     @Override
     public CarMaintenance findById(String id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             var maintenanceId = user.get().getCarMaintenance().getId();
-            Optional<CarMaintenance> carMaintenance = carMaintanceRepository.findById(maintenanceId);
+            Optional<CarMaintenance> carMaintenance = carMaintenanceRepository.findById(maintenanceId);
             if (carMaintenance.isPresent()) {
                 return carMaintenance.get();
             }
@@ -37,7 +37,7 @@ public class CarMaintanceServiceImpl implements CarMaintanceService {
     
     @Override
     public CarMaintenance create(CarMaintenance carMaintenance) {
-        return carMaintanceRepository.insert(carMaintenance);
+        return carMaintenanceRepository.insert(carMaintenance);
     }
 //
     @Override
@@ -45,8 +45,8 @@ public class CarMaintanceServiceImpl implements CarMaintanceService {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             var serviceId = user.get().getServiceCar().getId();
-            Optional<CarMaintenance> carMaintenance = carMaintanceRepository.findById(serviceId);
-            carMaintenance.ifPresent(car -> carMaintanceRepository.delete(car));
+            Optional<CarMaintenance> carMaintenance = carMaintenanceRepository.findById(serviceId);
+            carMaintenance.ifPresent(car -> carMaintenanceRepository.delete(car));
         }
     }
     @Override
@@ -54,11 +54,11 @@ public class CarMaintanceServiceImpl implements CarMaintanceService {
         Optional<User> user = userRepository.findById(carMaintenance.getId());
         if (user.isPresent()){
         var maintenanceId = user.get().getCarMaintenance().getId();
-            Optional<CarMaintenance> editedCarMaintenance = carMaintanceRepository.findById(maintenanceId);
+            Optional<CarMaintenance> editedCarMaintenance = carMaintenanceRepository.findById(maintenanceId);
             if (editedCarMaintenance.isPresent()) {
                 newData(editedCarMaintenance.get(), carMaintenance);
                 carMaintenance.setId(maintenanceId);
-                carMaintanceRepository.save(editedCarMaintenance.get());
+                carMaintenanceRepository.save(editedCarMaintenance.get());
                 return;
             }
         }

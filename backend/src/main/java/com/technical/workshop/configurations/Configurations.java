@@ -30,7 +30,8 @@ public class Configurations {
                         .requestMatchers("/users/create").permitAll()
                         .requestMatchers("/users").authenticated()
                         .requestMatchers("/car").authenticated()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/car/").authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

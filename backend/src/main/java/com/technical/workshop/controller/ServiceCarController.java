@@ -11,6 +11,10 @@ import com.technical.workshop.service.CarService;
 import com.technical.workshop.service.ServiceCarService;
 import com.technical.workshop.service.UserService;
 import com.technical.workshop.service.impl.JwtServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
+@Tag(name = "Car Services")
 @RequestMapping(value = "/car/{id}/service")
 public class ServiceCarController {
     @Autowired
@@ -37,7 +42,10 @@ public class ServiceCarController {
     UserRepository userRepository;
     @Autowired
     private JwtServiceImpl jwtServiceImpl;
-
+    @Operation(summary = "Get a service car. Must be logged", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get a service car successfully"),
+    })
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<ServiceCar> findById(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -49,7 +57,10 @@ public class ServiceCarController {
         }
         throw new RuntimeException("No token authorization");
     }
-
+    @Operation(summary = "Create a service car. Must not be logged", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Service car created successfully"),
+    })
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody ServiceCar serviceCar, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -69,7 +80,10 @@ public class ServiceCarController {
         }
         return ResponseEntity.created(uri).build();
     }
-
+    @Operation(summary = "Delete a service car. Must be logged", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Service car deleted successfully"),
+    })
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -89,7 +103,10 @@ public class ServiceCarController {
         }
         return ResponseEntity.noContent().build();
     }
-
+    @Operation(summary = "Update a service car. Must be logged", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Service car edited successfully"),
+    })
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody ServiceCar serviceCar, @PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
