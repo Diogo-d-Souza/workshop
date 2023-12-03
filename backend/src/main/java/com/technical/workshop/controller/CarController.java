@@ -44,11 +44,11 @@ public class CarController {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             Car car = carService.findById(id);
             if (car == null) {
-                throw new RuntimeException("Erro");
+                throw new RuntimeException("Car doesn't exist");
             }
             return ResponseEntity.ok().body(new CarDTO((car)));
         }
-        throw new RuntimeException("Erros");
+        throw new RuntimeException("No token authorization");
     }
 
     @RequestMapping(method = RequestMethod.POST)

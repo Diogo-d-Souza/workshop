@@ -2,6 +2,7 @@ package com.technical.workshop.model;
 
 import com.technical.workshop.model.DTO.CarOwnerDTO;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -13,7 +14,6 @@ public class Car {
     private String licensePlate;
     private Integer year;
     private CarOwnerDTO user;
-    private ServiceCar serviceCar;
 
     public String getId() {
         return id;
@@ -55,11 +55,4 @@ public class Car {
         this.user = user;
     }
 
-    public ServiceCar getServiceCar() {
-        return serviceCar;
-    }
-
-    public void setServiceCar(ServiceCar serviceCar) {
-        this.serviceCar = serviceCar;
-    }
 }

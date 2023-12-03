@@ -27,6 +27,7 @@ public class Configurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/users/create").permitAll()
                         .requestMatchers("/users").authenticated()
                         .requestMatchers("/car").authenticated()
                         .anyRequest().authenticated()

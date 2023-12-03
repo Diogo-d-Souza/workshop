@@ -44,17 +44,17 @@ public class ServiceCarController {
     @Autowired
     private JwtServiceImpl jwtServiceImpl;
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<ServiceCar> findById(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-//            Car car = serviceCarService.findById(id);
-//            if (car == null) {
-//                throw new RuntimeException("Erro");
-//            }
-//            return ResponseEntity.ok().body(new CarDTO((car)));
-//        }
-//        throw new RuntimeException("Erros");
-//    }
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<ServiceCar> findById(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            ServiceCar serviceCar = serviceCarService.findById(id);
+            if (serviceCar == null) {
+                throw new RuntimeException("Service doesn't exist");
+            }
+            return ResponseEntity.ok().body(serviceCar);
+        }
+        throw new RuntimeException("No token authorization");
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody ServiceCar serviceCar, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
@@ -65,49 +65,58 @@ public class ServiceCarController {
             var email = jwtServiceImpl.tokenValidator(token);
             User user = userRepository.findByEmailLike(email);
             if (user.getCar() != null) {
-                serviceCar.setCar(user.getCar());
+                user.setServiceCar(serviceCar);
                 serviceCarService.create(serviceCar);
-                Optional<Car> car = carRepository.findById(user.getCar().getId());
-                if(car.isPresent()){
-                    car.get().setServiceCar(serviceCar);
-                    carRepository.save(car.get());
-                }
+                userRepository.save(user);
+
                 return ResponseEntity.created(uri).build();
             }
             throw new RuntimeException("User doesn't have a registered car");
         }
         return ResponseEntity.created(uri).build();
     }
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-//
-//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-//            String token = authorizationHeader.substring(7);
-//            var email = jwtServiceImpl.tokenValidator(token);
-//            User user = userRepository.findByEmailLike(email);
-//            if (user.getCar() != null) {
-//                if (Objects.equals(user.getCar().getId(), id)) {
-//                    carService.delete(id);
-//                    user.setCar(null);
-//                    userRepository.save(user);
-//                    return ResponseEntity.noContent().build();
-//                }
-//                throw new RuntimeException("Car not found");
-//            }
-//            throw new RuntimeException("User doens't have a registered car");
-//        }
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<Void> update(@RequestBody Car car, @PathVariable String id) {
-//        car.setYear(car.getYear());
-//        car.setBrand(car.getBrand());
-//        car.setLicensePlate(car.getLicensePlate());
-//        car.setId(id);
-//        carService.update(car);
-//        return ResponseEntity.noContent().build();
-//    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            var email = jwtServiceImpl.tokenValidator(token);
+            User user = userRepository.findByEmailLike(email);
+            if (user.getCar() != null) {
+                if (Objects.equals(user.getId(), id)) {
+                    serviceCarService.delete(id);
+                    user.setServiceCar(null);
+                    userRepository.save(user);
+                    return ResponseEntity.noContent().build();
+                }
+                throw new RuntimeException("User not found");
+            }
+            throw new RuntimeException("User doens't have a registered car");
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody ServiceCar serviceCar, @PathVariable String id, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            var email = jwtServiceImpl.tokenValidator(token);
+            User user = userRepository.findByEmailLike(email);
+            if (user.getCar() != null) {
+                if (Objects.equals(user.getId(), id)) {
+                    serviceCar.setServiceName(serviceCar.getServiceName());
+                    serviceCar.setId(id);
+                    serviceCarService.update(serviceCar);
+                    user.setServiceCar(serviceCar);
+                    userRepository.save(user);
+                    return ResponseEntity.noContent().build();
+                }
+                throw new RuntimeException("User not found");
+            }
+            throw new RuntimeException("User doens't have a registered car");
+        }
+
+        return ResponseEntity.noContent().build();
+    }
 
 }

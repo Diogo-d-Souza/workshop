@@ -1,6 +1,7 @@
 package com.technical.workshop.controller;
 
 import com.technical.workshop.model.DTO.UserDTO;
+import com.technical.workshop.model.User;
 import com.technical.workshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok().body(new UserDTO((user)));
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody com.technical.workshop.model.User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user = userService.create(user);

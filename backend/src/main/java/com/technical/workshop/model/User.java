@@ -22,6 +22,7 @@ public class User implements UserDetails {
     @DBRef
     private Car car;
 
+    private ServiceCar serviceCar;
 
     public User(String id, String name, String email, String password) {
         this.id = id;
@@ -52,6 +53,21 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public ServiceCar getServiceCar() {
+        return serviceCar;
+    }
+
+    public void setServiceCar(ServiceCar serviceCar) {
+        this.serviceCar = serviceCar;
     }
 
     @Override
@@ -92,11 +108,5 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Car getCar() {
-        return car;
-    }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
 }
