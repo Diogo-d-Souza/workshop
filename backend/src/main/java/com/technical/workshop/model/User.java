@@ -21,8 +21,8 @@ public class User implements UserDetails {
     private String password;
     @DBRef
     private Car car;
-
     private ServiceCar serviceCar;
+    private CarMaintance carMaintance;
 
     public User(String id, String name, String email, String password) {
         this.id = id;
@@ -68,6 +68,14 @@ public class User implements UserDetails {
 
     public void setServiceCar(ServiceCar serviceCar) {
         this.serviceCar = serviceCar;
+    }
+
+    public CarMaintance getCarMaintance() {
+        return carMaintance;
+    }
+
+    public void setCarMaintance(CarMaintance carMaintance) {
+        this.carMaintance = carMaintance;
     }
 
     @Override

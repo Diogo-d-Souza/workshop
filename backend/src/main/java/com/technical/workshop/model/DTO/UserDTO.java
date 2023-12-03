@@ -1,6 +1,7 @@
 package com.technical.workshop.model.DTO;
 
 import com.technical.workshop.model.Car;
+import com.technical.workshop.model.CarMaintance;
 import com.technical.workshop.model.ServiceCar;
 import com.technical.workshop.model.User;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -12,8 +13,8 @@ public class UserDTO {
     private String password;
     @DBRef
     private Car car;
-
     private ServiceCar serviceCar;
+    private CarMaintance carMaintance;
 
     public UserDTO(User user) {
         id = user.getId();
@@ -22,6 +23,7 @@ public class UserDTO {
         password = user.getPassword();
         car = user.getCar();
         serviceCar = user.getServiceCar();
+        carMaintance = user.getCarMaintance();
     }
 
     public String getId() {
@@ -70,5 +72,13 @@ public class UserDTO {
 
     public void setServiceCar(ServiceCar serviceCar) {
         this.serviceCar = serviceCar;
+    }
+
+    public CarMaintance getCarMaintance() {
+        return carMaintance;
+    }
+
+    public void setCarMaintance(CarMaintance carMaintance) {
+        this.carMaintance = carMaintance;
     }
 }

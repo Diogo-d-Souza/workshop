@@ -29,18 +29,12 @@ import java.util.Optional;
 public class ServiceCarController {
     @Autowired
     private UserService userService;
-
     @Autowired
     private CarService carService;
     @Autowired
     private ServiceCarService serviceCarService;
-
-    @Autowired
-    private PasswordEncoder encoder;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    CarRepository carRepository;
     @Autowired
     private JwtServiceImpl jwtServiceImpl;
 
