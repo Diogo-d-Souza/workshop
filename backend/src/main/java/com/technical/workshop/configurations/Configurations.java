@@ -29,6 +29,7 @@ public class Configurations {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/users").authenticated()
                         .requestMatchers("/car").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

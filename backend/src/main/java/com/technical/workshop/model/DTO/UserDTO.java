@@ -1,18 +1,23 @@
 package com.technical.workshop.model.DTO;
 
+import com.technical.workshop.model.Car;
 import com.technical.workshop.model.User;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class UserDTO {
     private String id;
     private String name;
     private String email;
     private String password;
+    @DBRef
+    private Car car;
 
     public UserDTO(User user) {
         id = user.getId();
         name = user.getName();
         email = user.getEmail();
         password = user.getPassword();
+        car = user.getCar();
     }
 
     public String getId() {
@@ -45,5 +50,13 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

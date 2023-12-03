@@ -2,6 +2,7 @@ package com.technical.workshop.model;
 
 import jakarta.persistence.Entity;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,8 @@ public class User implements UserDetails {
     private String name;
     private String email;
     private String password;
+    @DBRef
+    private Car car;
 
 
     public User(String id, String name, String email, String password) {
@@ -89,4 +92,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 }

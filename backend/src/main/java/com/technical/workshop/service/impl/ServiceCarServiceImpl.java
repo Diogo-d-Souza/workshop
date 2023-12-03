@@ -2,17 +2,15 @@ package com.technical.workshop.service.impl;
 
 import com.technical.workshop.exceptions.NotFoundException;
 import com.technical.workshop.model.Car;
-import com.technical.workshop.model.User;
 import com.technical.workshop.repositories.CarRepository;
 import com.technical.workshop.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarServiceImpl implements CarService {
+public class ServiceCarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 

@@ -6,6 +6,9 @@ public class CarOwnerDTO {
     private String id;
     private String name;
 
+    public CarOwnerDTO() {
+    }
+
     public CarOwnerDTO(User user) {
         id = user.getId();
         name = user.getName();
