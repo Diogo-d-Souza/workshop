@@ -4,10 +4,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class CarMaintance {
+public class CarMaintenance {
     @Id
     private String id;
-    private String maintanceName;
+    private String maintenanceName;
 
 
     public String getId() {
@@ -18,11 +18,11 @@ public class CarMaintance {
         this.id = id;
     }
 
-    public String getMaintanceName() {
-        return maintanceName;
+    public String getMaintenanceName() {
+        return maintenanceName;
     }
 
-    public void setMaintanceName(String maintanceName) {
-        this.maintanceName = maintanceName;
+    public void setMaintenanceName(String maintenanceName) {
+        this.maintenanceName = maintenanceName;
     }
 }

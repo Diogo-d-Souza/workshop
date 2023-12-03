@@ -1,6 +1,5 @@
 package com.technical.workshop.model;
 
-import jakarta.persistence.Entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,7 +21,7 @@ public class User implements UserDetails {
     @DBRef
     private Car car;
     private ServiceCar serviceCar;
-    private CarMaintance carMaintance;
+    private CarMaintenance carMaintenance;
 
     public User(String id, String name, String email, String password) {
         this.id = id;
@@ -70,12 +69,12 @@ public class User implements UserDetails {
         this.serviceCar = serviceCar;
     }
 
-    public CarMaintance getCarMaintance() {
-        return carMaintance;
+    public CarMaintenance getCarMaintenance() {
+        return carMaintenance;
     }
 
-    public void setCarMaintance(CarMaintance carMaintance) {
-        this.carMaintance = carMaintance;
+    public void setCarMaintenance(CarMaintenance carMaintenance) {
+        this.carMaintenance = carMaintenance;
     }
 
     @Override

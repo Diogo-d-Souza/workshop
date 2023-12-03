@@ -26,8 +26,8 @@ public class ServiceCarServiceImpl implements ServiceCarService {
     public ServiceCar findById(String id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            var userId = user.get().getServiceCar().getId();
-            Optional<ServiceCar> serviceCar = serviceCarRepository.findById(userId);
+            var serviceCarId = user.get().getServiceCar().getId();
+            Optional<ServiceCar> serviceCar = serviceCarRepository.findById(serviceCarId);
             if (serviceCar.isPresent()) {
                 return serviceCar.get();
             }
@@ -59,6 +59,7 @@ public class ServiceCarServiceImpl implements ServiceCarService {
             Optional<ServiceCar> editedServiceCar = serviceCarRepository.findById(serviceId);
             if (editedServiceCar.isPresent()) {
                 newData(editedServiceCar.get(), serviceCar);
+                serviceCar.setId(serviceId);
                 serviceCarRepository.save(editedServiceCar.get());
                 return;
             }
