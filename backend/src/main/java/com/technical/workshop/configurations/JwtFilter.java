@@ -2,7 +2,7 @@ package com.technical.workshop.configurations;
 
 import com.technical.workshop.exceptions.UnauthorizedException;
 import com.technical.workshop.repositories.UserRepository;
-import com.technical.workshop.service.impl.JwtService;
+import com.technical.workshop.service.impl.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtServiceImpl;
     @Autowired
     private UserRepository userRepository;
     public static final String HEADER_ATTRIBUTE = "Authorization";
@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         try{
             String token = attribute.replace(PREFIX_ATTRIBUTE, "");
-            String email = jwtService.tokenValidator(token);
+            String email = jwtServiceImpl.tokenValidator(token);
             if (email == null) throw new UnauthorizedException("Invalid token");
             UserDetails user = userRepository.findByEmail(email);
 

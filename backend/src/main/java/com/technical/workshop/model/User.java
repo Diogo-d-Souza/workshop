@@ -20,11 +20,6 @@ public class User implements UserDetails {
     private String password;
 
 
-
-    public User() {
-
-    }
-
     public User(String id, String name, String email, String password) {
         this.id = id;
         this.name = name;

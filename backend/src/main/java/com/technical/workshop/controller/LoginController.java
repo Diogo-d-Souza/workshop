@@ -3,7 +3,7 @@ package com.technical.workshop.controller;
 import com.technical.workshop.model.DTO.LoginDTO;
 import com.technical.workshop.model.DTO.LoginResponseDTO;
 import com.technical.workshop.model.User;
-import com.technical.workshop.service.impl.JwtService;
+import com.technical.workshop.service.impl.JwtServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtServiceImpl;
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO login){
 
@@ -27,7 +27,7 @@ public class LoginController {
         var authenticate = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         var user = (User) authenticate.getPrincipal();
-        var token = jwtService.createToken(user);
+        var token = jwtServiceImpl.createToken(user);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 }
